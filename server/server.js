@@ -1,10 +1,20 @@
 const { WebSocketServer, WebSocket } = require("ws");
+const http = require("http");
 
 const PORT = process.env.PORT || 3001;
-const wss = new WebSocketServer({ port: PORT });
 
-// rooms[roomId] = { state, clients: Set<ws> }
-const rooms = {};
+// HTTP server — untuk health check Railway
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Type Race Server OK");
+});
+
+// WebSocket server pakai HTTP server yang sama
+const wss = new WebSocketServer({ server });
+
+server.listen(PORT, () => {
+  console.log(`✅ Type Race server running on port ${PORT}`);
+});
 
 const TEXTS = [
   "Pada tanggal 17 Agustus 1945, Soekarno membacakan teks proklamasi kemerdekaan Indonesia di Jalan Pegangsaan Timur nomor 56, Jakarta, menandai lahirnya bangsa yang merdeka dari penjajahan.",
@@ -158,5 +168,3 @@ wss.on("connection", (ws) => {
     }
   });
 });
-
-console.log(`✅ Type Race WebSocket server running on port ${PORT}`);
