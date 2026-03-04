@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 // ─────────────────────────────────────────────────────────
 // Ganti ini dengan URL Railway kamu setelah deploy server!
 // Contoh: "wss://typing-race-production.up.railway.app"
-const WS_URL = import.meta.env.VITE_WS_URL || "wss://type-racer-pvp-production.up.railway.app";
+const WS_URL = "wss://type-racer-pvp-production.up.railway.app";
 // ─────────────────────────────────────────────────────────
 
 const C = {
